@@ -123,11 +123,10 @@ We can now standardize the data and solve the business problems as follows.
 ### 1. Count the Number of Movies vs TV Shows
 
 ```sql
-SELECT 
-    type,
-    COUNT(*)
-FROM netflix
-GROUP BY 1;
+SELECT `type`, COUNT(*) AS No_for_each_type
+FROM netflix_data_copied
+GROUP BY `type`;
+
 ```
 
 **Objective:** Determine the distribution of content types on Netflix.
