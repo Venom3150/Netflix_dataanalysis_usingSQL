@@ -38,6 +38,85 @@ CREATE TABLE netflix
     description  VARCHAR(550)
 );
 ```
+## Before working with the questions it is important to make sure the data is cleaned properly. The dataset should be copied to store the raw data safely and starty by checking for the duplicate values 
+```sql
+-- Creating a duplicate table for working with queries
+CREATE TABLE netflix_data_copied
+LIKE netflix_dataset;
+
+INSERT netflix_data_copied
+SELECT *
+FROM netflix_dataset;
+
+-- Looking for the duplicate records
+
+WITH duplicated_records as (
+SELECT *, 
+ROW_NUMBER() OVER (PARTITION BY show_id, `type`, title, director, country, 
+date_added, release_year, rating, duration, listed_in, `description`) as row_num
+FROM netflix_data_copied)
+
+SELECT * FROM duplicated_records
+WHERE row_num > 1;
+
+```
+## The next step is to check for the null values. 
+
+```sql
+-- CHECKING NULL VALUES FOR EACH COLUMNS 
+
+SELECT *
+FROM netflix_data_copied
+WHERE show_id IS NULL OR show_id = ''; # no null for the show_id
+
+SELECT *
+FROM netflix_data_copied
+WHERE `type` IS NULL OR `type` = ''; # no null for `type` as well
+
+SELECT *
+FROM netflix_data_copied
+WHERE title is null or title = ''; # no null value for title
+
+
+SELECT *
+FROM netflix_data_copied
+WHERE director IS NULL OR director = ''; # the director has many empty values
+
+SELECT *
+FROM netflix_data_copied
+WHERE casts IS NULL OR casts = ''; # 825 records have no casts records
+
+SELECT *
+FROM netflix_data_copied
+WHERE country IS NULL OR country = ''; # 831 records have no country value
+
+SELECT *
+FROM netflix_data_copied
+WHERE date_added IS NULL OR date_added = ''; # 10 rows has no date
+
+SELECT *
+FROM netflix_data_copied
+WHERE release_year IS NULL OR release_year=''; # no null for this 
+
+SELECT *
+FROM netflix_data_copied
+WHERE rating IS NULL OR rating = ''; # 4 rows have empty value 
+
+SELECT *
+FROM netflix_data_copied
+WHERE duration IS NULL OR duration = ''; # 3 records have empty values
+
+SELECT *
+FROM netflix_data_copied
+WHERE listed_in IS NULL OR listed_in = ''; # no  records have empty values
+
+SELECT *
+FROM netflix_data_copied
+WHERE `description` IS NULL OR `description`= ''; # no records have empty values
+
+```
+We can now standardize the data and solve the business problems as follows. 
+
 
 ## Business Problems and Solutions
 
