@@ -38,7 +38,7 @@ CREATE TABLE netflix
     description  VARCHAR(550)
 );
 ```
-## Before working with the questions it is important to make sure the data is cleaned properly. The dataset should be copied to store the raw data safely and starty by checking for the duplicate values 
+Before working with the questions it is important to make sure the data is cleaned properly. The dataset should be copied to store the raw data safely and starty by checking for the duplicate values 
 ```sql
 -- Creating a duplicate table for working with queries
 CREATE TABLE netflix_data_copied
@@ -60,7 +60,7 @@ SELECT * FROM duplicated_records
 WHERE row_num > 1;
 
 ```
-## The next step is to check for the null values. 
+The next step is to check for the null values. 
 
 ```sql
 -- CHECKING NULL VALUES FOR EACH COLUMNS 
